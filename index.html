@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Moser</title>
+	<meta charset="utf-8">
+	<link rel="shortcut icon" type="image/x-icon" href="images/moser.ico" media="screen">
+	<style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+		    font-family: Arial,"Microsoft YaHei","微软雅黑";
+			font-size: 14px;
+			color:#313131;
+		}
+		img{border: none;}
+		ul{list-style: none;}
+		.clearFl{zoom: 1;}
+		.clearFl:after{content:"";display: block;clear: both;}
+		body{background: #eff4f8;}
+		#content{width: 800px;margin: 0 auto;}
+		.head{width: 640px;margin: 52px auto 0;text-align: center;}
+		.head .appear{width: 128px;height: 128px;border: 4px solid #fff;border-radius: 100%;margin-left: 252px;overflow: hidden;position: relative;}
+		.head .appear img{position: absolute;top: 0;left: 0;}
+		.head .talk{width: 300px;height: 50px;line-height: 50px;text-align: left;font-size: 20px;text-indent: 15px;color: #1d3c51;position: absolute;top: -120px;left: 420px;border: 2px solid red;border-radius: 10px;opacity: 0.6;filter: alpha(opacity==60);display: none;}
+		.head h3{height: 28px;margin-top: 8px;line-height: 28px;color: #e64c3c;font-size: 22px;position: relative;}
+		.head p{height: 24px;line-height: 24px;color: #2c3e50;font-size: 18px;}
+
+		.selfAss{width: 640px;padding: 30px 80px 10px;font-size: 16px;line-height: 24px;}
+
+		.lifeline{width: 800px;height: 140px;margin: 40px auto;background: url(images/line.jpg) no-repeat center center;position: relative;}
+		.picList{position: absolute;}
+		.picList:nth-child(1){top: -10px;text-align: center;}
+		.picList:nth-child(2){top: 100px;}
+		.picList:nth-child(3){top: 130px;}
+		.picList:nth-child(3) li{color: #f70d49;font-size: 15px;font-family: Tahoma;display: none;position: relative;
+			left: -150px;}
+		.picList li{width: 160px;text-align: center;float: left;}
+
+		.info,.skills{width: 640px;padding: 0 80px;}
+		.info{height: 240px;}
+		.information{float: left;width: 290px;}
+		.information:nth-child(1){margin-right: 60px;}
+		.ptitle{width: 260px;height: 24px;background: #2c3e50;border-left: 10px solid #e64c3c;color: #f0f4f8;line-height: 24px;text-indent: 16px;}
+		.plList{margin-top: 10px;}
+		.plList li{font-weight: bold;text-align: left;}
+		.plList li .spanF{display: inline-block;width: 65px;height: 34px;line-height: 34px;}
+		.plList li .spanL{display: inline-block;font-size: 14px;height: 34px;line-height: 34px;}
+
+
+		.weList{margin-top: 10px;}
+		.weList li:nth-child(odd){font-weight: bold;width: 290px;height: 35px;line-height: 35px;}
+		.weList li:nth-child(even){width: 290px;height: 20px;line-height: 20px;}
+
+		.perskill{float: left;width: 290px;}
+		.perskill:nth-child(1){margin-right: 60px;}
+		.skills{height: 280px;}
+		.skillList{margin-top: 10px;}
+		.skillList li{position: relative;width: 270px;height: 30px;line-height: 30px;text-align: left;font-size: 16px;font-weight: bold;}
+		.skillList li .range{width: 140px;height: 18px;border: 1px solid #2e3677;background: #eff4f8;position: absolute;top: 5px;right: 0;overflow: hidden;cursor: pointer;}
+		.skillList li .rangeCon{width: 140px;height: 18px;background: #4dbcd1;position: absolute;top: 0;left: -140px;}
+
+		.hobbies{position: relative;height: 400px;margin-left: 80px;}
+		.hobList{width: 640px;height: 200px;margin-top: 40px;}
+		.hobList li{width: 160px;height: 180px;float: left;position: relative;}
+		.hobList li img{position: absolute;top: 0;}
+		.hobList li:nth-child(1) img{left: 45px;}
+		.hobList li:nth-child(2) img{left: 33px;}
+		.hobList li:nth-child(3) img{left: 25px;}
+		.hobList li:nth-child(4) img{left: 37px;}
+		.hobList li p{width: 160px;height: 40px;line-height: 40px;text-align: center;position: absolute;top: 85px;left: 0;}
+
+
+
+		.hideMore{width: 640px;height: 80px;position: absolute;top: 220px;left: 0;}
+		.hideMore li{width: 640px;height: 80px;position: absolute;top: 0;left: 0;display: none;}
+		.hideMore li .top3{display: inline-block;width: 100px;height: 80px;;font-size: 36px;text-align: center;line-height: 80px;}
+		.hideMore li .spanLi{font-size: 16px;line-height: 80px;padding-left: 10px;}
+
+
+		.crossL,.crossR{background: #eff4f8;width: 320px;height: 80px;position: absolute;top: 220px;z-index: 5;}
+		.crossL{left: 0;}
+		.crossR{right: 80px;}
+	</style>
+	<script type="text/javascript" src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			// 头像动态
+			var talks=["Hey man, nice to meet you!","Welcome,and know me!","Ooh,you really like me","Now,be my friend!"]
+			var num=0;
+			var item=null;
+			var hobbie=null;
+			$(".appear").hover(function(){
+				$(this).css({"border":"4px solid #e64c3c"});
+				$(this).find("img").stop(true).animate({"width":"148px","height":"148px","left":"-10px","top":"-10px"},200);
+				$(".head h3").stop(true).animate({"font-size":"30px"},200);
+				
+				$(".head .talk").text(talks[num]).stop(true,true).show(1000);
+				num++;
+				if(num==4){
+					num=0;
+				}
+			},function(){
+				$(this).css({"border":"4px solid #fff"});
+				$(this).find("img").stop(true).animate({"width":"128px","height":"128px","left":0,"top":0},200);
+				$(".head h3").stop(true).animate({"font-size":"22px"},200);
+				$(".head .talk").stop(true,true).fadeOut(1000);
+			});
+			// lifeline部分
+			$(".picList").eq(0).find("li img").hover(function(){
+				// alert($(this).parents("li").index());
+				item=$(this).parents("li").index();
+				$(".picList").eq(2).children().eq(item).stop(true).animate({"left":item*160+"px"},200).show().siblings().hide();
+			},function(){
+				$(".picList").eq(2).children().eq(item).stop(true).animate({"left":"-150px"},200).hide();
+			});
+			// 进度条部分
+			$(".rangeCon").hover(function(){
+				$(this).parent().parent().css({"font-size":"18px","color":"red"});
+			},function(){
+				$(this).parent().parent().css({"font-size":"16px","color":"#313131"});
+			});
+			$(".rangeCon").eq(0).animate({"left":"-7px"},1000);
+			$(".rangeCon").eq(1).animate({"left":"-14px"},1000);
+			$(".rangeCon").eq(2).animate({"left":"-42px"},1000);
+			$(".rangeCon").eq(3).animate({"left":"-14px"},1000);
+			$(".rangeCon").eq(4).animate({"left":"-70px"},1000);
+			$(".rangeCon").eq(5).animate({"left":"-70px"},1000);
+			$(".rangeCon").eq(6).animate({"left":"-56px"},1000);
+			$(".rangeCon").eq(7).animate({"left":"-28px"},1000);
+			$(".rangeCon").eq(8).animate({"left":"-14px"},1000);
+			$(".rangeCon").eq(9).animate({"left":"-14px"},1000);
+			$(".rangeCon").eq(10).animate({"left":"-42px"},1000);
+			$(".rangeCon").eq(11).animate({"left":"-42px"},1000);
+			$(".rangeCon").eq(12).animate({"left":"-42px"},1000);
+			// hobbies部分
+			$(".hobList li img").hover(function(){
+				hobbie=$(this).parent().index();
+				$(this).stop(true).animate({"top":"-15px"},200);
+				$(".hobList li").eq(hobbie).find("p").css("color","red");
+				// 底部拉窗显示
+				$(".hideMore li").eq(hobbie).show().siblings().hide();
+				$(".cross").stop(true,true).animate({"width":0},1000);
+			},function(){
+				hobbie=$(this).parent().index();
+				$(this).stop(true).animate({"top":0},200);
+				$(".hobList li").eq(hobbie).find("p").css("color","black");
+				// 底部拉窗隐藏
+				$(".cross").stop(true,true).animate({"width":"320px"},500);
+			});
+		});
+	</script>
+</head>
+<body>
+	<div id="content">
+		<div class="head">
+			<div class="appear">
+				<img src="images/me.png" />
+			</div>
+			<h3>Moser Wang
+				<div class="talk">Hey man, nice to meet you!</div>
+			</h3>
+			<p>Web Developer</p>
+		</div>
+		<div class="selfAss">Hey! I am Moser Wang. I am a professional web developer. I am very passionate about designing interfaces while taking into consideration the latest UX trends and techniques. I always balance looking fresh with being effective.</div>
+		<div class="lifeline">
+			<ul class="picList clearFl">
+				<li><a href="javascript:void(0)" target="_blank"><img src="images/birth.png" width="63" height="59" alt="birth"/></a></li>
+				<li><a href="http://www.hsu.edu.cn/" target="_blank"><img src="images/hus.png" width="54" height="54" alt="huangshan"/></a></li>
+				<li><a href="http://www.jetsen.com.cn/" target="_blank"><img src="images/jetsen.png" width="84" height="54" alt="jetsen"/></a></li>
+				<li><a href="https://www.splio.cn/" target="_blank"><img src="images/splio.png" width="62" height="54" alt="splio"/></a></li>
+				<li><a href="javascript:void(0)" target="_blank"><img src="images/sun.png" width="54" height="54" alt="future" /></a></li>
+			</ul>
+			<ul class="picList clearFl">
+				<li>1992/12</li>
+				<li>2011/9-2015/6</li>
+				<li>2015/6-2016/1</li>
+				<li>2016/3-Present</li>
+				<li>Future</li>
+			</ul>
+			<ul class="picList clearFl">
+				<li>Birth</li>
+				<li>Bachelor of Engineering</li>
+				<li>Operation Engineer</li>
+				<li>Web Developer</li>
+				<li>Better</li>
+			</ul>
+		</div>
+		<div class="details">
+			<div class="info clearFl">
+				<div class="information">
+					<h2 class="ptitle">Personal Info</h2>
+					<ul class="plList">
+						<li><span class="spanF">Name</span><span class="spanL">:    &nbsp;&nbsp;&nbsp;王进文</span></li>
+						<li><span class="spanF">Gender</span><span class="spanL">:    &nbsp;&nbsp;&nbsp;male</span></li>
+						<li><span class="spanF">Phone</span><span class="spanL">:    &nbsp;&nbsp;&nbsp;+8618521739056</span></li>
+						<li><span class="spanF">E-mail</span><span class="spanL">:    &nbsp;&nbsp;&nbsp;1275034203@qq.com</span></li>
+						<li><span class="spanF">Address</span><span class="spanL">:    &nbsp;&nbsp;&nbsp;shanghai/China</span></li>
+					</ul>
+				</div>
+				<div class="information">
+					<h2 class="ptitle">Work Experience</h2>
+					<ul class="weList">
+						<li>Web Developer [ Mar 2016-Now ]</li><li>上海,北京速立优数据有限公司</li>
+						<li>Operation Engineer [ Jun 2015-Jan 2016 ]</li><li>上海,北京捷成世纪股份有限公司</li>
+						<li>Factory Operator [ Jun 2014-Nov 2014 ]</li><li>合肥,华众焊业有限公司</li>
+					</ul>
+				</div>
+			</div>
+			<div class="skills clearFl">
+				<div class="perskill">
+					<h2 class="ptitle">Professional Skills</h2>
+					<ul class="skillList">
+						<li>HTML<div class="range"><div class="rangeCon"></div></div></li>
+						<li>CSS<div class="range"><div class="rangeCon"></div></div></li></li>
+						<li>Javascript<div class="range"><div class="rangeCon"></div></div></li></li>
+						<li>Jquery<div class="range"><div class="rangeCon"></div></div></li></li>
+						<li>PHP<div class="range"><div class="rangeCon"></div></div></li></li>
+						<li>Mysql<div class="range"><div class="rangeCon"></div></div></li></li>
+						<li>Linux<div class="range"><div class="rangeCon"></div></div></li></li>
+					</ul>
+				</div>
+				<div class="perskill">
+					<h2 class="ptitle">Soft Skills</h2>
+					<ul class="skillList">
+						<li>English<div class="range"><div class="rangeCon"></div></div></li></li>
+						<li>Learning<div class="range"><div class="rangeCon"></div></div></li></li>
+						<li>TeamWork<div class="range"><div class="rangeCon"></div></div></li></li>
+						<li>Creative<div class="range"><div class="rangeCon"></div></div></li></li>
+						<li>Compression<div class="range"><div class="rangeCon"></div></div></li></li>	
+						<li>Communicate<div class="range"><div class="rangeCon"></div></div></li></li>
+					</ul>
+				</div>
+			</div>
+			<div class="hobbies">
+				<h2 class="ptitle">Passion&Hobbies</h2>
+				<ul class="hobList">
+					<li><img src="images/book.png" width="69" height="87"><p>Reading</p></li>
+					<li><img src="images/music.png" width="93" height="87"><p>Music</p></li>
+					<li><img src="images/game.png" width="110" height="87"><p>Cheese</p></li>
+					<li><img src="images/web.png" width="85" height="87"><p>Web</p></li>
+				</ul>
+				<ul class="hideMore">
+					<li><span class="top3">Top3</span><span class="spanLi">《茶花女》---小仲马</span><span class="spanLi">《平凡的世界》---路遥 </span><span class="spanLi">《蛙》---莫言</span></li>
+					<li><span class="top3">Top3</span><span class="spanLi">《高山流水》---古筝</span><span class="spanLi">《漫步人生路》---邓丽君 </span><span class="spanLi">《Fade》---Alan walker</span></li>
+					<li><span class="top3">象棋</span><span class="spanLi">喜爱象棋，高中时期获得全校象棋比赛第三名</span></li>
+					<li><span class="top3">Web</span><span class="spanLi">Web开发爱好者，热爱学习新的知识，积极向上，勇于创新。</span></li>
+				</ul>
+				<div class="cross crossL"></div>
+				<div class="cross crossR"></div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
